@@ -11,17 +11,19 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [cpf, setCpf] = useState(null); // Novo estado para o CPF
 
-  const handleLogin = (loginSuccessful) => {
+  const handleLogin = (loginSuccessful, userCpf) => {
     if (loginSuccessful) {
       setIsAuthenticated(true);
+      setCpf(userCpf); // Defina o CPF aqui
     }
   };
 
   return isAuthenticated ? (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="Home" component={TicketSelection} />
+        <Tab.Screen name="Home"  component={() => <TicketSelection cpf={cpf} />}/>
         <Tab.Screen name="Carrinho" component={Carrinho} />
         <Tab.Screen name="Perfil" component={Perfil} />
       </Tab.Navigator>

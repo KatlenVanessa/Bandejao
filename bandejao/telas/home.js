@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import React, { useState } from "react";
+import { View, Text, Button, StyleSheet } from "react-native";
 
-const TicketSelection = ({ navigation }) => {
+const TicketSelection = ({ navigation, cpf }) => {
   const [tickets, setTickets] = useState({
     cafe: 0,
     almoco: 0,
@@ -11,8 +11,8 @@ const TicketSelection = ({ navigation }) => {
   // Preços por tipo de refeição
   const prices = {
     cafe: 0.75,
-    almoco: 1.50,
-    janta: 1.50,
+    almoco: 1.5,
+    janta: 1.5,
   };
 
   const handleIncrement = (type) => {
@@ -36,14 +36,17 @@ const TicketSelection = ({ navigation }) => {
 
   const addToCart = () => {
     // Valide se pelo menos um ticket foi selecionado antes de prosseguir
-    const totalTickets = Object.values(tickets).reduce((acc, curr) => acc + curr, 0);
+    const totalTickets = Object.values(tickets).reduce(
+      (acc, curr) => acc + curr,
+      0
+    );
     if (totalTickets === 0) {
-      alert('Selecione pelo menos um ticket para adicionar ao carrinho.');
+      alert("Selecione pelo menos um ticket para adicionar ao carrinho.");
       return;
     }
 
     // Aqui você pode chamar a navegação para a tela do carrinho e passar os dados do carrinho como parâmetro
-    navigation.navigate('Carrinho', { cart: tickets, total: calculateTotal() });
+    navigation.navigate("Carrinho", { cart: tickets, total: calculateTotal() });
 
     setTickets({
       cafe: 0,
@@ -52,10 +55,11 @@ const TicketSelection = ({ navigation }) => {
     });
   };
 
-
   return (
     <View style={styles.container}>
+
       <Text style={styles.title}>Escolha a quantidade de tickets:</Text>
+
       {Object.keys(tickets).map((type) => (
         <View key={type} style={styles.ticketContainer}>
           <Text>{type.charAt(0).toUpperCase() + type.slice(1)}:</Text>
@@ -75,22 +79,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
   },
   ticketContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginBottom: 10,
   },
   total: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 10,
   },
 });
