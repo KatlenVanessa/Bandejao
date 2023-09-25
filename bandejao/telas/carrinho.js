@@ -17,7 +17,7 @@ const CartScreen = ({ navigation, route }) => {
     };
 
     axios
-      .post('http://localhost:8000/carrinho.php', data)
+      .post('http://localhost:8000/teste.php', data)
       .then((response) => {
         if (response.data.success) {
           console.log(response.data);

@@ -30,7 +30,8 @@ if (!$result) {
 if (mysqli_num_rows($result) === 1) {
     // Login bem-sucedido
     $_SESSION['cpf'] = $cpf; // Armazene o CPF na variável de sessão
-    $response = ['success' => true, 'message' => 'Login bem-sucedido'];
+    $teste = $_SESSION['cpf'];
+    $response = ['success' => true, 'message' => $teste];
 } else {
     // Login falhou
     $response = ['success' => false, 'message' => 'CPF ou senha inválidos'];
