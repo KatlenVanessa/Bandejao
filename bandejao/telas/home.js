@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
+import { useCart } from "./CartContext";
 
-const TicketSelection = ({ navigation, cpf }) => {
+const TicketSelection = () => {
+  const { cart, setCart } = useCart();
   const [tickets, setTickets] = useState({
     cafe: 0,
     almoco: 0,
     janta: 0,
   });
 
-  // Preços por tipo de refeição
   const prices = {
     cafe: 0.75,
     almoco: 1.5,
@@ -26,40 +27,27 @@ const TicketSelection = ({ navigation, cpf }) => {
   };
 
   const calculateTotal = () => {
-    // Calcular o total com base nos preços definidos
     let total = 0;
     for (const type in tickets) {
       total += tickets[type] * prices[type];
     }
-    return total.toFixed(2); // Arredondar para 2 casas decimais
+    return total.toFixed(2);
   };
 
   const addToCart = () => {
-    // Valide se pelo menos um ticket foi selecionado antes de prosseguir
-    const totalTickets = Object.values(tickets).reduce(
-      (acc, curr) => acc + curr,
-      0
-    );
-    if (totalTickets === 0) {
-      alert("Selecione pelo menos um ticket para adicionar ao carrinho.");
-      return;
+    const updatedCart = { ...cart };
+    for (const type in tickets) {
+      updatedCart[type] += tickets[type];
     }
+    setCart(updatedCart);
 
-    // Aqui você pode chamar a navegação para a tela do carrinho e passar os dados do carrinho como parâmetro
-    navigation.navigate("Carrinho", { cart: tickets, total: calculateTotal() });
-
-    setTickets({
-      cafe: 0,
-      almoco: 0,
-      janta: 0,
-    });
+    // Limpe os tickets selecionados após adicioná-los ao carrinho
+    setTickets({ cafe: 0, almoco: 0, janta: 0 });
   };
 
   return (
     <View style={styles.container}>
-
       <Text style={styles.title}>Escolha a quantidade de tickets:</Text>
-
       {Object.keys(tickets).map((type) => (
         <View key={type} style={styles.ticketContainer}>
           <Text>{type.charAt(0).toUpperCase() + type.slice(1)}:</Text>

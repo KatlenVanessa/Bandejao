@@ -1,28 +1,31 @@
 import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import axios from 'axios';
+import { useCart } from "./CartContext";
 
-const CartScreen = ({ navigation, route }) => {
-  const { cart, total } = route.params;
-
+const CartScreen = ({cpf}) => {
+  const { cart } = useCart(); // Acesse o contexto do carrinho
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
   const confirmPurchase = () => {
     setLoading(true);
 
+    const total = calculateTotal(); // Calcula o total
+
     const data = {
       cart,
       total,
+      cpf,
     };
 
     axios
-      .post('http://localhost:8000/teste.php', data)
+      .post('http://localhost:8000/carrinho.php', data)
       .then((response) => {
         if (response.data.success) {
           console.log(response.data);
           setMessage('Compra realizada com sucesso!');
-          navigation.navigate('Home');
+          //navigation.navigate('Home');
         } else {
           console.log(response.data);
           setMessage('Erro ao processar a compra: ' + response.data.message);
@@ -38,23 +41,46 @@ const CartScreen = ({ navigation, route }) => {
       });
   };
 
+  const calculateTotal = () => {
+    let total = 0;
+    for (const type in cart) {
+      // Substitua os preços pelos valores corretos conforme sua aplicação
+      const price = getPriceByType(type);
+      total += cart[type] * price;
+    }
+    return total.toFixed(2); // Arredonde para 2 casas decimais
+  };
+
+  // Função para obter o preço por tipo de refeição (substitua pelos valores reais)
+  const getPriceByType = (type) => {
+    const prices = {
+      cafe: 0.75,
+      almoco: 1.5,
+      janta: 1.5,
+    };
+    return prices[type] || 0;
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Carrinho de Compras</Text>
+      <Text>{cpf}</Text>
       <View style={styles.cartItems}>
         {Object.keys(cart).map((item, index) => (
           <View key={index} style={styles.cartItem}>
-            <Text>{item}: {cart[item]}</Text>
+            <Text>
+              {item.charAt(0).toUpperCase() + item.slice(1)}: {cart[item]}
+            </Text>
           </View>
         ))}
       </View>
-      <Text style={styles.total}>Total: R$ {total}</Text>
+      <Text style={styles.total}>Total: R$ {calculateTotal()}</Text>
       <Button
-        title={loading ? 'Processando...' : 'Confirmar Compra'}
+        title={loading ? "Processando..." : "Confirmar Compra"}
         onPress={confirmPurchase}
         disabled={loading}
       />
-      {message !== '' && <Text style={styles.message}>{message}</Text>}
+      {message !== "" && <Text style={styles.message}>{message}</Text>}
     </View>
   );
 };
@@ -62,12 +88,12 @@ const CartScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   header: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
   },
   cartItems: {
@@ -78,13 +104,14 @@ const styles = StyleSheet.create({
   },
   total: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
   },
   message: {
     fontSize: 16,
-    color: 'red',
+    color: "red",
     marginTop: 10,
   },
 });
+
 export default CartScreen;
