@@ -6,6 +6,8 @@ const Login = ({ onLogin }) => {
   const [cpf, setCpf] = useState("");
   const [senha, setSenha] = useState("");
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+
 
   const handleLogin = () => {
     setLoading(true);
@@ -17,15 +19,17 @@ const Login = ({ onLogin }) => {
         if (response.data.success) {
           // Login bem-sucedido, chame a função de retorno no pai
           onLogin(true, cpf); // Passar o CPF para o componente pai
-          alert(response.data.message);
+          console.log(response.data.message);
         } else {
           // Login falhou, exiba uma mensagem de erro
           onLogin(false, null); // Passar null para o CPF em caso de falha
-          alert(response.data.message);
+          console.log(response.data.message);
+          setMessage("CPF ou Senha Inválidos")
         }
       })
       .catch((error) => {
         console.error("Erro na solicitação HTTP:", error);
+        setMessage("Erro Interno")
       })
       .finally(() => {
         setLoading(false);
@@ -48,6 +52,9 @@ const Login = ({ onLogin }) => {
         value={senha}
         secureTextEntry
       />
+      <View style={styles.message}>
+        {message !== "" && <Text style={styles.message}>{message}</Text>}
+      </View>
       <Button
         title={loading ? "Entrando..." : "Entrar"}
         onPress={handleLogin}
@@ -75,6 +82,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 4,
+  },
+  message: {
+    paddingBottom: 5,
+    fontSize: 16,
+    color: "red",
+    marginTop: 10,
   },
 });
 

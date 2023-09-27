@@ -16,6 +16,7 @@ $cpfUser = $data['cpf'];
 
 //$user_id = 2;
 
+
 foreach ($cart as $type => $quantity) {
     // Construa a consulta SQL com base no tipo de refeição
     $columnName = "qtd_" . $type;
@@ -23,8 +24,18 @@ foreach ($cart as $type => $quantity) {
     mysqli_query($conn, $query);
 }
 
+$result = mysqli_query($conn, $query);
+
 //$conn->close();
 
-$response = ['success' => true, 'message' => 'Compra realizada com sucesso'];
-echo json_encode($response);
+if ($result) {
+    // Login bem-sucedido
+    $response = ['success' => true, 'message' => 'Sucesso na compra'];
+} else {
+    // Login falhou
+    $response = ['success' => false, 'message' => 'Falha na compra'];
+}
+
 ?>
+
+

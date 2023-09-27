@@ -11,7 +11,7 @@ import { CartProvider } from "./telas/CartContext";
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [cpf, setCpf] = useState(null); // Novo estado para o CPF
 
   const handleLogin = (loginSuccessful, userCpf) => {

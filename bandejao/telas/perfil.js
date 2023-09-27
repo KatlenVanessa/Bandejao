@@ -7,21 +7,24 @@ const Perfil = ({cpf}) => {
   
 
   useEffect(() => {
-    // Função para buscar os dados do usuário no backend pelo CPF
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
           `http://localhost:8000/perfil.php?cpf=${cpf}`
         );
-        setUserData(response.data); // Supondo que o backend retorna os dados do usuário em um objeto
+        setUserData(response.data);
       } catch (error) {
         console.error("Erro na solicitação HTTP:", error);
       }
     };
 
-    if (cpf) {
+    // Função para fazer polling a cada 5 segundos (ajuste o intervalo conforme necessário)
+    const pollingInterval = setInterval(() => {
       fetchUserData();
-    }
+    }, 1000);
+
+    // Certifique-se de limpar o intervalo quando o componente for desmontado
+    return () => clearInterval(pollingInterval);
   }, [cpf]);
 
   return (

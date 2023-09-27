@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import axios from 'axios';
 import { useCart } from "./CartContext";
 
 const CartScreen = ({cpf}) => {
-  const { cart } = useCart(); // Acesse o contexto do carrinho
+  const { cart, clearCart } = useCart(); // Acesse o contexto do carrinho
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false); // Novo estado
 
   const confirmPurchase = () => {
     setLoading(true);
@@ -21,20 +22,25 @@ const CartScreen = ({cpf}) => {
 
     axios
       .post('http://localhost:8000/carrinho.php', data)
-      .then((response) => {
+      .then((response) => { 
         if (response.data.success) {
-          console.log(response.data);
+          console.log(response.data.message);
           setMessage('Compra realizada com sucesso!');
           //navigation.navigate('Home');
+          clearCart();
+          setShowSuccessMessage(true); // Exibir mensagem de sucesso
+
         } else {
-          console.log(response.data);
-          setMessage('Erro ao processar a compra: ' + response.data.message);
+          console.log(response.data.message);
+          setMessage('Erro ao processar a compra');
+          clearCart();
+          setShowSuccessMessage(true); // Exibir mensagem de sucesso
         }
       })
       .catch((error) => {
         console.error('Erro na solicitação HTTP:', error);
         setMessage('Erro ao processar a compra. Tente novamente mais tarde.');
-      
+        setShowSuccessMessage(true); // Exibir mensagem de sucesso
       })
       .finally(() => {
         setLoading(false);
@@ -61,10 +67,21 @@ const CartScreen = ({cpf}) => {
     return prices[type] || 0;
   };
 
+
+  useEffect(() => {
+    if (showSuccessMessage) {
+      const timer = setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 3000);
+
+      // Limpe o temporizador se o componente for desmontado antes do tempo limite
+      return () => clearTimeout(timer);
+    }
+  }, [showSuccessMessage]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Carrinho de Compras</Text>
-      <Text>{cpf}</Text>
       <View style={styles.cartItems}>
         {Object.keys(cart).map((item, index) => (
           <View key={index} style={styles.cartItem}>
@@ -80,7 +97,7 @@ const CartScreen = ({cpf}) => {
         onPress={confirmPurchase}
         disabled={loading}
       />
-      {message !== "" && <Text style={styles.message}>{message}</Text>}
+      {showSuccessMessage && <Text style={styles.message}>{message}</Text>}
     </View>
   );
 };
