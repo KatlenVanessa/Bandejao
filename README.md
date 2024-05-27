@@ -3,7 +3,7 @@
 
 ## Configuração do bando de dados
   
-Baixe a VM: https://drive.google.com/file/d/14L7lx0rZ6dF-FaSgdjxWB129HrKMxWTt/view?usp=sharing
+https://drive.google.com/file/d/14L7lx0rZ6dF-FaSgdjxWB129HrKMxWTt/view?usp=sharing
 
 Login
 ```
