@@ -24,7 +24,7 @@ A idea desse projeto baseia-se em aplicativo móvel desenvolvido em React que pe
 ## Capturas de Tela
 ### Página de Login
 
-![Texto Alternativo]([URL_da_Imagem](https://drive.google.com/file/d/1AkfjVNzjWnK3YBexOWNNffNy4y9TzCaQ/view?usp=drive_link))
+![]([URL_da_Imagem](https://drive.google.com/file/d/1AkfjVNzjWnK3YBexOWNNffNy4y9TzCaQ/view?usp=drive_link))
 
 ### Seleção de Tickets
 
