@@ -9,11 +9,11 @@ include 'conexao.php';
 
 // Verifica o método da solicitação
 if ($_SERVER["REQUEST_METHOD"] === "GET") {
-    // Recupera o CPF da consulta
-    $cpf = $_GET['cpf'];
+    // Recupera o matricula da consulta
+    $matricula = $_GET['matricula'];
 
-    // Consulta SQL para obter informações do perfil do usuário com base no CPF
-    $query = "SELECT * FROM login WHERE cpf = '$cpf'";
+    // Consulta SQL para obter informações do perfil do usuário com base no matricula
+    $query = "SELECT * FROM login WHERE matricula = '$matricula'";
 
     $result = mysqli_query($conn, $query);
 
@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     }
 
     if (mysqli_num_rows($result) === 1) {
-        // Se o usuário com o CPF especificado for encontrado, retorne seus dados
+        // Se o usuário com o matricula especificado for encontrado, retorne seus dados
         $row = mysqli_fetch_assoc($result);
 
         $userData = [
@@ -31,12 +31,13 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
             'cafe' => $row['qtd_cafe'],
             'almoco' => $row['qtd_almoco'],
             'janta' => $row['qtd_janta'],
-            // Adicione outros campos do perfil do usuário conforme necessário
+            'curso' => $row['curso'],
+            'matricula' => $row['matricula'],
         ];
 
         echo json_encode($userData);
     } else {
-        // Se nenhum usuário com o CPF especificado for encontrado, retorne uma mensagem de erro
+        // Se nenhum usuário com o matricula especificado for encontrado, retorne uma mensagem de erro
         echo json_encode(['error' => 'Usuário não encontrado']);
     }
 

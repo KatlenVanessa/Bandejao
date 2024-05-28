@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "OPTIONS") {
     return;
 }
 
-$servername = "192.168.1.10";
+$servername = "192.168.1.8";
 $username = "root";
 $password = "123";
 $dbname = "usuarios";

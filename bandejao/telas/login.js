@@ -3,33 +3,29 @@ import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import axios from "axios";
 
 const Login = ({ onLogin }) => {
-  const [cpf, setCpf] = useState("");
+  const [matricula, setmatricula] = useState("");
   const [senha, setSenha] = useState("");
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
-
+  const [message, setMessage] = useState("");
 
   const handleLogin = () => {
     setLoading(true);
-
-    // Enviar solicitação de login para o servidor PHP
     axios
-      .post("http://localhost:8000/login.php", { cpf, senha })
+      .post("http://localhost:8000/login.php", { matricula, senha })
       .then((response) => {
+        console.log("matriculaaaaaaaa", matricula)
         if (response.data.success) {
-          // Login bem-sucedido, chame a função de retorno no pai
-          onLogin(true, cpf); // Passar o CPF para o componente pai
+          onLogin(true, matricula);
           console.log(response.data.message);
         } else {
-          // Login falhou, exiba uma mensagem de erro
-          onLogin(false, null); // Passar null para o CPF em caso de falha
+          onLogin(false, null);
           console.log(response.data.message);
-          setMessage("CPF ou Senha Inválidos")
+          setMessage("Matricula ou Senha Inválidos");
         }
       })
       .catch((error) => {
         console.error("Erro na solicitação HTTP:", error);
-        setMessage("Erro Interno")
+        setMessage("Erro Interno");
       })
       .finally(() => {
         setLoading(false);
@@ -38,28 +34,34 @@ const Login = ({ onLogin }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Faça login</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="CPF"
-        onChangeText={(text) => setCpf(text)}
-        value={cpf}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Senha"
-        onChangeText={(text) => setSenha(text)}
-        value={senha}
-        secureTextEntry
-      />
-      <View style={styles.message}>
-        {message !== "" && <Text style={styles.message}>{message}</Text>}
+      <View>
+        <Text style={styles.title}>Bandejão</Text>
       </View>
-      <Button
-        title={loading ? "Entrando..." : "Entrar"}
-        onPress={handleLogin}
-        disabled={loading}
-      />
+      <View style={styles.card}>
+        <TextInput
+          style={styles.input}
+          placeholder="Matricula"
+          onChangeText={(text) => setmatricula(text)}
+          value={matricula}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Senha"
+          onChangeText={(text) => setSenha(text)}
+          value={senha}
+          secureTextEntry
+        />
+        <Button
+          color={"007ea7"}
+          title={loading ? "Entrando..." : "Entrar"}
+          onPress={handleLogin}
+          disabled={loading}
+        />
+
+        <View style={styles.message}>
+          {message !== "" && <Text style={styles.message}>{message}</Text>}
+        </View>
+      </View>
     </View>
   );
 };
@@ -69,11 +71,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 16,
   },
   title: {
-    fontSize: 24,
-    marginBottom: 16,
+    color: "#007ea7",
+    fontSize: 60,
+    fontWeight: "bold",
+    marginBottom: 300,
+    marginTop: 100,
   },
   input: {
     width: "100%",
@@ -82,12 +86,28 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 4,
+    color: "#ffffff",
   },
   message: {
     paddingBottom: 5,
     fontSize: 16,
     color: "red",
+    fontWeight: "bold",
     marginTop: 10,
+  },
+  card: {
+    width: "110%",
+    backgroundColor: "#003249",
+    padding: 50,
+    borderStartStartRadius: 100,
+    borderTopRightRadius: 100,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 5 },
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

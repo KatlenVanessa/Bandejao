@@ -12,12 +12,12 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [cpf, setCpf] = useState(null); // Novo estado para o CPF
+  const [matricula, setmatricula] = useState(null); // Novo estado para o matricula
 
-  const handleLogin = (loginSuccessful, userCpf) => {
+  const handleLogin = (loginSuccessful, usermatricula) => {
     if (loginSuccessful) {
       setIsAuthenticated(true);
-      setCpf(userCpf); // Defina o CPF aqui
+      setmatricula(usermatricula); // Defina o matricula aqui
     }
   };
 
@@ -28,9 +28,28 @@ export default function App() {
           <Tab.Screen
             name="Home"
             component={TicketSelection}
+            options={
+              {
+                headerShown: false,
+              }
+            }
           />
-          <Tab.Screen name="Carrinho" component={() => <Carrinho cpf={cpf} />} />
-          <Tab.Screen name="Perfil"  component={() => <Perfil cpf={cpf} />} />
+          <Tab.Screen
+            name="Pedidos"
+            component={() => <Carrinho matricula={matricula} />}
+            options={
+              {
+                headerShown: false,
+              }
+            }
+          />
+          <Tab.Screen name="Perfil" component={() => <Perfil matricula={matricula} />} 
+            options={
+              {
+                headerShown: false,
+              }
+            }
+          />
         </Tab.Navigator>
       </CartProvider>
     </NavigationContainer>

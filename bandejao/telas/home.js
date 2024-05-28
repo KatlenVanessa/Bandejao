@@ -40,25 +40,41 @@ const TicketSelection = () => {
       updatedCart[type] += tickets[type];
     }
     setCart(updatedCart);
-
-    // Limpe os tickets selecionados após adicioná-los ao carrinho
     setTickets({ cafe: 0, almoco: 0, janta: 0 });
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Escolha a quantidade de tickets:</Text>
+      <Text style={[styles.title, { fontSize: 28 }, {color: "#597879"}]}>
+        Escolha a quantidade de tickets:
+      </Text>
       {Object.keys(tickets).map((type) => (
         <View key={type} style={styles.ticketContainer}>
-          <Text>{type.charAt(0).toUpperCase() + type.slice(1)}:</Text>
-          <Text>R$ {prices[type].toFixed(2)}</Text>
-          <Text>Quantidade: {tickets[type]}</Text>
-          <Button title="+" onPress={() => handleIncrement(type)} />
-          <Button title="-" onPress={() => handleDecrement(type)} />
+          <View>
+            <Text style={textStyles.label}>
+              {type.charAt(0) + type.slice(1)}:
+            </Text>
+            <Text style={textStyles.label}>R$ {prices[type].toFixed(2)}</Text>
+          </View>
+          <View>
+            <Button
+              color={"#003249"}
+              title="+"
+              onPress={() => handleIncrement(type)}
+            />
+            <Button
+              color={"#003249"}
+              title="-"
+              onPress={() => handleDecrement(type)}
+            />
+          </View>
+          <View>
+            <Text style={textStyles.label}>Quantidade: {tickets[type]}</Text>
+          </View>
         </View>
       ))}
-      <Text style={styles.total}>Total: R$ {calculateTotal()}</Text>
-      <Button title="Adicionar ao Carrinho" onPress={addToCart} />
+      <Text style={[textStyles.label, {color: "#000"}]}>Total: R$ {calculateTotal()}</Text>
+      <Button color={"#003249"} title="Adicionar ao Pedido" onPress={addToCart} />
     </View>
   );
 };
@@ -78,12 +94,31 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 10,
+    marginBottom: 20,
+    padding: 20,
+    backgroundColor: "#007ea7",
+    borderRadius: 6,
   },
   total: {
     fontSize: 16,
     fontWeight: "bold",
     marginTop: 10,
+  },
+});
+
+const textStyles = StyleSheet.create({
+  label: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+    color: "#fff",
+  },
+});
+
+const buttonStyles = StyleSheet.create({
+  button: {
+    borderRadius: 10,
+    padding: 10,
   },
 });
 
