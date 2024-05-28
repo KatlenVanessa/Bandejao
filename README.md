@@ -21,6 +21,16 @@ A idea desse projeto baseia-se em aplicativo móvel desenvolvido em React que pe
 - **Axios**: Biblioteca para fazer requisições HTTP no frontend.
 - **Context API**: Gerenciamento de estado global no React.
 
+## Capturas de Tela
+### Página de Login
+<img src="https://drive.google.com/file/d/1AkfjVNzjWnK3YBexOWNNffNy4y9TzCaQ/view?usp=drive_link">
+
+### Seleção de Tickets
+
+### Carrinho de Compras
+
+### Histórico de Compras
+
 ## Instalação
 
 ### Recursos Externos
