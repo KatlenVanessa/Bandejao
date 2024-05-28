@@ -24,13 +24,30 @@ A idea desse projeto baseia-se em aplicativo móvel desenvolvido em React que pe
 ## Capturas de Tela
 ### Página de Login
 
-![]([URL_da_Imagem](https://drive.google.com/file/d/1AkfjVNzjWnK3YBexOWNNffNy4y9TzCaQ/view?usp=drive_link))
+<p align="rigth">
+<img src="/screenshots/log1.png" width="150">
+<img src="/screenshots/log2.png" width="150">
+</p>
 
 ### Seleção de Tickets
 
-### Carrinho de Compras
+<p align="rigth">
+<img src="/screenshots/tick1.png" width="150">
+<img src="/screenshots/tick2.png" width="150">
+</p>
 
-### Histórico de Compras
+### Carrinho de Pedidos
+
+<p align="rigth">
+<img src="/screenshots/pedido.png" width="150">
+</p>
+
+### Perfil
+
+<p align="rigth">
+<img src="/screenshots/perfil1.png" width="150">
+<img src="/screenshots/perfi2.png" width="150">
+</p>
 
 ## Instalação
 
