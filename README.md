@@ -46,7 +46,7 @@ A idea desse projeto baseia-se em aplicativo móvel desenvolvido em React que pe
 
 <p align="rigth">
 <img src="/screenshots/perfil1.png" width="150">
-<img src="/screenshots/perfi2.png" width="150">
+<img src="/screenshots/perfil2.png" width="150">
 </p>
 
 ## Instalação
